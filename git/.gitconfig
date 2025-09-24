@@ -1,7 +1,8 @@
 [user]
     # Configure these with your actual details
-    name = Your Name
-    email = your.email@example.com
+    name = Shubham
+    email = sg2199203@gmail.com
+    username = ishubham21
 
 [core]
     editor = code --wait
