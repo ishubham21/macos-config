@@ -1,8 +1,8 @@
-# 🚀 Professional macOS Dotfiles
+# macOS Dotfiles
 
-A senior engineer's modular, high-performance dotfiles setup for macOS. This configuration emphasizes productivity, maintainability, and extensibility.
+A modular, high-performance dotfiles setup for macOS. This configuration emphasizes productivity, maintainability, and extensibility.
 
-## ✨ Features
+## Features
 
 - **macOS Optimized**: Tailored specifically for macOS with Homebrew package management
 - **Modular Architecture**: Organized into logical, maintainable components
@@ -14,31 +14,31 @@ A senior engineer's modular, high-performance dotfiles setup for macOS. This con
 - **Development Tools**: Pre-configured for modern development stacks
 - **Safe Installation**: Automatic backups before any changes
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ~/.dotfiles/
-├── install.sh              # 🚀 Main installation script
-├── Makefile                # 🔧 Build automation & maintenance
-├── README.md               # 📚 This file
+├── install.sh              # Main installation script
+├── Makefile                # Build automation & maintenance
+├── README.md               # This file
 ├── zsh/
-│   ├── .zshrc              # 🎯 Main zsh configuration
-│   ├── aliases.zsh         # 📋 Comprehensive aliases
-│   ├── exports.zsh         # 🌍 Environment variables
-│   ├── functions.zsh       # ⚡ Custom functions
-│   ├── path.zsh           # 🛣️  PATH management
-│   └── plugins.zsh        # 🔌 Plugin configuration
+│   ├── .zshrc              # Main zsh configuration
+│   ├── aliases.zsh         # Comprehensive aliases
+│   ├── exports.zsh         # Environment variables
+│   ├── functions.zsh       # Custom functions
+│   ├── path.zsh           # PATH management
+│   └── plugins.zsh        # Plugin configuration
 ├── git/
-│   ├── .gitconfig         # 📝 Git global configuration
-│   └── .gitignore_global  # 🚫 Global gitignore patterns
+│   ├── .gitconfig         # Git global configuration
+│   └── .gitignore_global  # Global gitignore patterns
 ├── scripts/
-│   ├── setup_homebrew.sh  # 🍺 Homebrew setup
-│   └── macos_defaults.sh  # 🍎 macOS system preferences
+│   ├── setup_homebrew.sh  # Homebrew setup
+│   └── macos_defaults.sh  # macOS system preferences
 └── config/
-    └── Brewfile           # 📦 Homebrew bundle file
+    └── Brewfile           # Homebrew bundle file
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### One-Line Installation
 
@@ -54,13 +54,13 @@ cd ~/.dotfiles
 make install
 ```
 
-## 📋 Requirements
+## Requirements
 
 - **macOS** (any recent version)
 - **Git** (minimum requirement)
 - **Internet connection** for package downloads
 
-## 🛠️ Available Commands
+## Available Commands
 
 ```bash
 make help              # Show all available commands
@@ -73,7 +73,7 @@ make test             # Test configuration validity
 make clean            # Clean up broken symlinks
 ```
 
-## 📦 What Gets Installed
+## What Gets Installed
 
 ### Core Tools
 - **Shell**: ZSH with Oh My Zsh framework
@@ -94,7 +94,7 @@ make clean            # Clean up broken symlinks
 - **Browsers**: Firefox, Google Chrome
 - **Containers**: Docker Desktop
 
-## ⚙️ Configuration Structure
+## Configuration Structure
 
 - `zsh/.zshrc` - Main shell configuration
 - `zsh/aliases.zsh` - Command aliases
@@ -103,7 +103,7 @@ make clean            # Clean up broken symlinks
 - `zsh/path.zsh` - PATH management
 - `zsh/plugins.zsh` - Plugin configuration
 
-## 🔧 Customization
+## Customization
 
 After installation, customize your setup:
 
@@ -112,14 +112,14 @@ After installation, customize your setup:
 3. **SSH Keys**: Add your SSH keys to GitHub/GitLab
 4. **macOS Settings**: Run `scripts/macos_defaults.sh` for system preferences
 
-## 🚨 Important Notes
+## Important Notes
 
 - This setup **only supports macOS**
 - Existing configurations are automatically backed up
 - Installation requires administrator privileges for some operations
 - The script will prompt before making changes
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -127,6 +127,6 @@ After installation, customize your setup:
 4. Test with `make test`
 5. Submit a pull request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License.
