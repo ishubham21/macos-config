@@ -8,7 +8,6 @@
     autocrlf = input
     excludesfile = ~/.gitignore_global
     pager = less -FRX
-    init.defaultBranch = main
 
 [push]
     default = simple
