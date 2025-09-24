@@ -1,64 +1,10 @@
 #!/usr/bin/env zsh
-# =============================================================================
-# functions.zsh - Advanced Custom Functions
-# =============================================================================
 
-# =============================================================================
-# File & Directory Operations
-# =============================================================================
-
-
-# Quick directory navigation (using functions instead of aliases)
 up() { cd ..; }
 up2() { cd ../..; }
 up3() { cd ../../..; }
 up4() { cd ../../../..; }
 
-
-
-
-
-
-# =============================================================================
-# Git Workflow Functions
-# =============================================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-# =============================================================================
-# Development Workflow Functions
-# =============================================================================
-
-
-
-
-
-# =============================================================================
-# System Utilities
-# =============================================================================
-
-
-
-
-
-
-# =============================================================================
-# Productivity Functions
-# =============================================================================
-
-
-
-# Extract various archive formats
 extract_file() {
     if [[ -f "$1" ]]; then
         case "$1" in
@@ -81,14 +27,6 @@ extract_file() {
     fi
 }
 
-
-
-
-# =============================================================================
-# System Information
-# =============================================================================
-
-# System information function
 sysinfo() {
     echo "=== System Information ==="
     echo "Hostname: $(hostname)"
@@ -108,21 +46,14 @@ sysinfo() {
     df -h / 2>/dev/null || df -h
 }
 
-# Process information
 psgrep() {
     ps aux | grep -i "$1" | grep -v grep
 }
 
-# Memory usage by process
 meminfo() {
     ps -eo pmem,pcpu,rss,vsize,args | sort -k 1 -rn | head -10
 }
 
-# =============================================================================
-# Network Functions
-# =============================================================================
-
-# Port checker
 portcheck() {
     local port=${1:-80}
     local host=${2:-localhost}
@@ -137,19 +68,16 @@ portcheck() {
     fi
 }
 
-# Get public IP with details
 ipinfo() {
     curl -s "https://ipinfo.io/$1" | jq '.'
 }
 
-# Network scan
 netscan() {
     local network=${1:-"192.168.1"}
     echo "Scanning network ${network}.1-254..."
     nmap -sn "${network}.1-254" 2>/dev/null | grep -E "Nmap scan report|MAC Address"
 }
 
-# DNS lookup with multiple record types
 dnslookup() {
     local domain="$1"
     if [[ -z "$domain" ]]; then
@@ -166,16 +94,10 @@ dnslookup() {
     echo "CNAME Record:" && dig +short CNAME "$domain"
 }
 
-# =============================================================================
-# Development Functions
-# =============================================================================
-
-# Git functions
 gclone() {
     git clone "$1" && cd "$(basename "$1" .git)"
 }
 
-# Create new branch and switch to it
 gnb() {
     if [[ -z "$1" ]]; then
         echo "Usage: gnb <branch-name>"
@@ -184,7 +106,6 @@ gnb() {
     git checkout -b "$1"
 }
 
-# Git commit with conventional commits
 gconv() {
     local type="$1"
     local message="$2"
@@ -198,7 +119,6 @@ gconv() {
     git commit -m "${type}: ${message}"
 }
 
-# Initialize new project
 initproject() {
     local name="$1"
     local type="${2:-node}"
@@ -238,7 +158,6 @@ initproject() {
     echo "Project '$name' initialized with type '$type'"
 }
 
-# Docker helper functions
 dexec() {
     local container="$1"
     shift
@@ -250,12 +169,6 @@ dlogs() {
     docker logs -f "$container"
 }
 
-# =============================================================================
-# Utility Functions
-# =============================================================================
-
-
-# QR code generator
 qr() {
     local text="$1"
     if [[ -z "$text" ]]; then
@@ -265,7 +178,6 @@ qr() {
     curl -s "https://qr-server.com/api/qr-server.php?size=200x200&data=${text}"
 }
 
-# URL shortener
 shorten() {
     local url="$1"
     if [[ -z "$url" ]]; then
@@ -275,7 +187,6 @@ shorten() {
     curl -s "https://is.gd/create.php?format=simple&url=${url}"
 }
 
-# Color palette
 colors() {
     for i in {0..255}; do
         printf "\x1b[48;5;%sm%3d\e[0m " "$i" "$i"
@@ -285,11 +196,6 @@ colors() {
     done
 }
 
-# =============================================================================
-# Performance & Monitoring
-# =============================================================================
-
-# Benchmark command execution
 benchmark() {
     local cmd="$*"
     if [[ -z "$cmd" ]]; then
@@ -306,7 +212,6 @@ benchmark() {
     done
 }
 
-# Monitor file changes
 monitor() {
     local file="$1"
     if [[ -z "$file" ]]; then
@@ -321,42 +226,28 @@ monitor() {
     fi
 }
 
-# =============================================================================
-# Text Processing
-# =============================================================================
-
-# Convert text to uppercase
 upper() {
     echo "$*" | tr '[:lower:]' '[:upper:]'
 }
 
-# Convert text to lowercase
 lower() {
     echo "$*" | tr '[:upper:]' '[:lower:]'
 }
 
-# Generate random string
 randstr() {
     local length="${1:-16}"
     openssl rand -base64 "$((length * 3/4))" | tr -d "=+/" | cut -c1-"$length"
 }
 
-# URL encode
 urlencode() {
     python3 -c "import urllib.parse; print(urllib.parse.quote('$1'))"
 }
 
-# URL decode
 urldecode() {
     python3 -c "import urllib.parse; print(urllib.parse.unquote('$1'))"
 }
 
-# =============================================================================
-# macOS Specific Functions
-# =============================================================================
-
 if [[ "$OSTYPE" == darwin* ]]; then
-    # Toggle hidden files in Finder
     togglehidden() {
         local current=$(defaults read com.apple.finder AppleShowAllFiles 2>/dev/null)
         if [[ "$current" == "TRUE" ]]; then
@@ -369,27 +260,19 @@ if [[ "$OSTYPE" == darwin* ]]; then
         killall Finder
     }
     
-    # Get app bundle ID
     bundleid() {
         osascript -e "id of app \"$1\""
     }
     
-    # Eject all mounted volumes
     ejectall() {
         osascript -e 'tell application "Finder" to eject (every disk whose executable is true)'
     }
     
-    # Lock screen
     lock() {
         /System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend
     }
 fi
 
-# =============================================================================
-# Security Functions
-# =============================================================================
-
-# Generate SSH key
 gensshkey() {
     local email="$1"
     local keytype="${2:-ed25519}"
@@ -404,7 +287,6 @@ gensshkey() {
     cat "$HOME/.ssh/id_${keytype}.pub"
 }
 
-# Test SSL certificate
 sslcheck() {
     local domain="$1"
     local port="${2:-443}"
@@ -417,19 +299,12 @@ sslcheck() {
     echo | openssl s_client -connect "${domain}:${port}" 2>/dev/null | openssl x509 -noout -dates
 }
 
-# =============================================================================
-# GPG Functions
-# =============================================================================
-
-# Enhanced GPG pinentry toggle with error handling
 toggle_pinentry() {
     local gpg_dir="$HOME/.gnupg"
     local conf_file="$gpg_dir/gpg-agent.conf"
     
-    # Create .gnupg directory if it doesn't exist
     [[ ! -d "$gpg_dir" ]] && mkdir -p "$gpg_dir" && chmod 700 "$gpg_dir"
     
-    # Create gpg-agent.conf if it doesn't exist
     if [[ ! -f "$conf_file" ]]; then
         echo "pinentry-program /opt/homebrew/bin/pinentry-mac" > "$conf_file"
         chmod 600 "$conf_file"
@@ -452,11 +327,6 @@ toggle_pinentry() {
     echo "Pinentry toggled. Test with: echo 'test' | gpg --clearsign"
 }
 
-# =============================================================================
-# Productivity Functions
-# =============================================================================
-
-# Quick note taking
 note() {
     local note_dir="$HOME/notes"
     local note_file="$note_dir/$(date +%Y-%m-%d).md"

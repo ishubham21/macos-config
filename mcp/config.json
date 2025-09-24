@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "dotfiles-manager": {
+      "command": "python3",
+      "args": ["/Users/ishubham/.dotfiles/mcp/server.py"],
+      "env": {
+        "DOTFILES_DIR": "/Users/ishubham/.dotfiles"
+      }
+    }
+  }
+}

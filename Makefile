@@ -1,20 +1,13 @@
-# =============================================================================
-# Makefile - Dotfiles Build Automation
-# =============================================================================
-
 .PHONY: help install update backup restore test clean lint format doctor
 
-# Default target
 .DEFAULT_GOAL := help
 
-# Colors
 CYAN := \033[36m
 GREEN := \033[32m
 YELLOW := \033[33m
 RED := \033[31m
 RESET := \033[0m
 
-# Variables
 DOTFILES_DIR := $(PWD)
 BACKUP_DIR := $(HOME)/.dotfiles-backup-$(shell date +%Y%m%d_%H%M%S)
 SHELL_CHECK := $(shell command -v shellcheck 2> /dev/null)
@@ -305,5 +298,4 @@ debug: ## Show makefile variables
 	@echo "HOME: $(HOME)"
 	@echo "PWD: $(PWD)"
 
-# Include local makefile if it exists
--include Makefile.local "
+-include Makefile.local

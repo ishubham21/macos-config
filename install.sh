@@ -1,24 +1,12 @@
 #!/usr/bin/env bash
-# =============================================================================
-# install.sh - Dotfiles Installation Script
-# =============================================================================
-# Author: ishubham21
-# Description: Automated installation and setup of dotfiles
-# Usage: curl -sSL https://raw.githubusercontent.com/user/dotfiles/main/install.sh | bash
-# =============================================================================
 
 set -euo pipefail
-
-# =============================================================================
-# Configuration
-# =============================================================================
 
 readonly DOTFILES_DIR="$HOME/.dotfiles"
 readonly DOTFILES_REPO="${DOTFILES_REPO:-https://github.com/yourusername/dotfiles.git}"
 readonly BACKUP_DIR="$HOME/.dotfiles-backup-$(date +%Y%m%d_%H%M%S)"
 readonly LOG_FILE="$HOME/.dotfiles-install.log"
 
-# Colors for output
 readonly RED='\033[0;31m'
 readonly GREEN='\033[0;32m'
 readonly YELLOW='\033[0;33m'
@@ -26,17 +14,12 @@ readonly BLUE='\033[0;34m'
 readonly PURPLE='\033[0;35m'
 readonly CYAN='\033[0;36m'
 readonly WHITE='\033[0;37m'
-readonly NC='\033[0m' # No Color
+readonly NC='\033[0m'
 
-# Flags
 FORCE_INSTALL=false
 SKIP_PACKAGES=false
 DRY_RUN=false
 VERBOSE=false
-
-# =============================================================================
-# Utility Functions
-# =============================================================================
 
 log() {
     echo -e "${GREEN}[$(date +'%Y-%m-%d %H:%M:%S')]${NC} $*" | tee -a "$LOG_FILE"
@@ -62,12 +45,10 @@ success() {
     echo -e "${GREEN}[SUCCESS]${NC} $*" | tee -a "$LOG_FILE"
 }
 
-# Check if command exists
 has_command() {
     command -v "$1" >/dev/null 2>&1
 }
 
-# Ask for confirmation
 confirm() {
     local message="$1"
     local default="${2:-n}"
@@ -92,7 +73,6 @@ confirm() {
     done
 }
 
-# Backup existing file
 backup_file() {
     local file="$1"
     
@@ -103,7 +83,6 @@ backup_file() {
     fi
 }
 
-# Create symlink with backup
 create_symlink() {
     local source="$1"
     local target="$2"
@@ -113,25 +92,17 @@ create_symlink() {
         return 0
     fi
     
-    # Backup existing file
     backup_file "$target"
     
-    # Remove existing file/symlink
     [[ -e "$target" || -L "$target" ]] && rm -f "$target"
     
-    # Create directory if needed
     local target_dir
     target_dir=$(dirname "$target")
     [[ ! -d "$target_dir" ]] && mkdir -p "$target_dir"
     
-    # Create symlink
     ln -sf "$source" "$target"
     success "Created symlink: $target -> $source"
 }
-
-# =============================================================================
-# System Detection
-# =============================================================================
 
 detect_os() {
     if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -141,16 +112,11 @@ detect_os() {
     fi
 }
 
-# =============================================================================
-# Package Installation
-# =============================================================================
-
 install_homebrew() {
     if ! has_command brew; then
         info "Installing Homebrew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         
-        # Add Homebrew to PATH for Apple Silicon Macs
         if [[ -d "/opt/homebrew" ]]; then
             eval "$(/opt/homebrew/bin/brew shellenv)"
         fi
@@ -180,7 +146,6 @@ install_packages_macos() {
     
     info "Installing macOS packages via Homebrew..."
     
-    # Essential packages
     local packages=(
         git
         zsh
@@ -203,7 +168,6 @@ install_packages_macos() {
         docker-compose
     )
     
-    # Install packages
     for package in "${packages[@]}"; do
         if brew list "$package" &>/dev/null; then
             debug "$package already installed"
@@ -213,7 +177,6 @@ install_packages_macos() {
         fi
     done
     
-    # Install cask applications
     local casks=(
         visual-studio-code
         iterm2
@@ -234,18 +197,12 @@ install_packages_macos() {
     fi
 }
 
-
-# =============================================================================
-# Dotfiles Setup
-# =============================================================================
-
 clone_dotfiles() {
     if [[ -d "$DOTFILES_DIR" ]]; then
         if [[ -d "$DOTFILES_DIR/.git" ]]; then
             info "Dotfiles repository already exists"
             cd "$DOTFILES_DIR"
             
-            # Check if remote origin exists
             if git remote get-url origin >/dev/null 2>&1; then
                 info "Updating from remote repository..."
                 git pull origin main || git pull origin master
@@ -272,27 +229,22 @@ clone_dotfiles() {
 setup_symlinks() {
     info "Setting up symlinks..."
     
-    # ZSH configuration
     create_symlink "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
     
-    # Git configuration
     [[ -f "$DOTFILES_DIR/git/.gitconfig" ]] && \
         create_symlink "$DOTFILES_DIR/git/.gitconfig" "$HOME/.gitconfig"
     
     [[ -f "$DOTFILES_DIR/git/.gitignore_global" ]] && \
         create_symlink "$DOTFILES_DIR/git/.gitignore_global" "$HOME/.gitignore_global"
     
-    # Vim configuration
     [[ -f "$DOTFILES_DIR/vim/.vimrc" ]] && \
         create_symlink "$DOTFILES_DIR/vim/.vimrc" "$HOME/.vimrc"
     
-    # SSH configuration (if exists)
     [[ -f "$DOTFILES_DIR/ssh/config" ]] && \
         create_symlink "$DOTFILES_DIR/ssh/config" "$HOME/.ssh/config"
 }
 
 configure_shell() {
-    # Set zsh as default shell
     if [[ "$SHELL" != *"zsh" ]]; then
         info "Setting zsh as default shell..."
         
@@ -300,12 +252,10 @@ configure_shell() {
         if has_command zsh; then
             zsh_path=$(which zsh)
             
-            # Add zsh to /etc/shells if not present
             if ! grep -q "$zsh_path" /etc/shells; then
                 echo "$zsh_path" | sudo tee -a /etc/shells
             fi
             
-            # Change default shell
             chsh -s "$zsh_path"
             success "Default shell changed to zsh"
         else
@@ -313,10 +263,6 @@ configure_shell() {
         fi
     fi
 }
-
-# =============================================================================
-# Post-Installation Setup
-# =============================================================================
 
 setup_directories() {
     info "Creating useful directories..."
@@ -351,10 +297,6 @@ generate_ssh_key() {
         fi
     fi
 }
-
-# =============================================================================
-# Main Installation Process
-# =============================================================================
 
 show_usage() {
     cat << EOF
@@ -409,7 +351,6 @@ parse_args() {
 main() {
     parse_args "$@"
     
-    # Initialize log file
     : > "$LOG_FILE"
     
     info "Starting dotfiles installation..."
@@ -420,16 +361,13 @@ main() {
         warn "DRY RUN MODE - No changes will be made"
     fi
     
-    # Pre-installation checks
     if ! has_command git; then
         error "Git is required but not installed"
         exit 1
     fi
     
-    # Installation steps
     clone_dotfiles
     
-    # Install packages for macOS
     case "$(detect_os)" in
         macos)
             install_packages_macos
@@ -462,5 +400,4 @@ main() {
     fi
 }
 
-# Run main function with all arguments
 main "$@"
