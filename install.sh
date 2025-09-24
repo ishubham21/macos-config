@@ -2,7 +2,7 @@
 # =============================================================================
 # install.sh - Dotfiles Installation Script
 # =============================================================================
-# Author: Senior Engineer Setup
+# Author: ishubham21
 # Description: Automated installation and setup of dotfiles
 # Usage: curl -sSL https://raw.githubusercontent.com/user/dotfiles/main/install.sh | bash
 # =============================================================================

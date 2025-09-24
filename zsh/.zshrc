@@ -2,7 +2,7 @@
 # =============================================================================
 # .zshrc - Main ZSH Configuration
 # =============================================================================
-# Author: Senior Engineer Setup
+# Author: ishubham21
 # Description: Modular, high-performance ZSH configuration
 # =============================================================================
 

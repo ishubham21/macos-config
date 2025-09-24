@@ -1,6 +1,6 @@
 # 🚀 Professional Dotfiles
 
-A senior engineer's modular, high-performance dotfiles setup for macOS and Linux. This configuration emphasizes productivity, maintainability, and extensibility.
+A modular, high-performance dotfiles setup for macOS. This configuration emphasizes productivity, maintainability, and extensibility.
 
 ## ✨ Features
 
