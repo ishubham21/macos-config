@@ -242,9 +242,17 @@ install_packages_macos() {
 clone_dotfiles() {
     if [[ -d "$DOTFILES_DIR" ]]; then
         if [[ -d "$DOTFILES_DIR/.git" ]]; then
-            info "Dotfiles repository already exists, updating..."
+            info "Dotfiles repository already exists"
             cd "$DOTFILES_DIR"
-            git pull origin main || git pull origin master
+            
+            # Check if remote origin exists
+            if git remote get-url origin >/dev/null 2>&1; then
+                info "Updating from remote repository..."
+                git pull origin main || git pull origin master
+            else
+                warn "No remote origin configured - skipping update"
+                info "To set up remote: git remote add origin <your-repo-url>"
+            fi
         else
             warn "Dotfiles directory exists but is not a git repository"
             if confirm "Remove existing directory and clone fresh?"; then

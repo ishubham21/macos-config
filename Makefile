@@ -97,7 +97,12 @@ format: ## Format shell scripts
 
 update: ## Update dotfiles and dependencies
 	@echo "$(GREEN)Updating dotfiles...$(RESET)"
-	@git pull origin main || git pull origin master
+	@if git remote get-url origin >/dev/null 2>&1; then \
+		git pull origin main || git pull origin master; \
+	else \
+		echo "$(YELLOW)No remote origin configured - skipping update$(RESET)"; \
+		echo "$(CYAN)To set up remote: git remote add origin <your-repo-url>$(RESET)"; \
+	fi
 	@$(MAKE) update-submodules
 	@$(MAKE) update-plugins
 	@echo "$(GREEN)✓ Dotfiles updated$(RESET)"
