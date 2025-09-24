@@ -3,6 +3,7 @@
     name = Shubham
     email = sg2199203@gmail.com
     username = ishubham21
+    signingkey = 24C42C897CE62A07
 
 [core]
     editor = code --wait
@@ -94,6 +95,9 @@
 
 [init]
     defaultBranch = main
+
+[commit]
+    gpgsign = true
 
 [credential]
     helper = osxkeychain
