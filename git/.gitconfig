@@ -1,0 +1,105 @@
+[user]
+    # Configure these with your actual details
+    name = Your Name
+    email = your.email@example.com
+
+[core]
+    editor = code --wait
+    autocrlf = input
+    excludesfile = ~/.gitignore_global
+    pager = less -FRX
+    init.defaultBranch = main
+
+[push]
+    default = simple
+    autoSetupRemote = true
+
+[pull]
+    rebase = false
+
+[merge]
+    tool = vscode
+    conflictstyle = diff3
+
+[diff]
+    tool = vscode
+
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+
+[mergetool "vscode"]
+    cmd = code --wait $MERGED
+
+[alias]
+    # Common aliases
+    st = status
+    co = checkout
+    br = branch
+    ci = commit
+    unstage = reset HEAD --
+    last = log -1 HEAD
+    visual = !gitk
+    lg = log --oneline --decorate --graph --all
+    amend = commit --amend --no-edit
+    undo = reset --soft HEAD~1
+    wip = commit -am "WIP: work in progress"
+    unwip = reset HEAD~1
+    stash-unapply = stash show -p | git apply --reverse
+    
+    # Advanced aliases
+    cleanup = "!git branch --merged | grep -v '\\*\\|main\\|develop' | xargs -n 1 git branch -d"
+    remotes = remote -v
+    who = blame
+    what = show
+    when = log --pretty=format:'%h %ad %s' --date=short
+    recent = for-each-ref --sort=-committerdate refs/heads/ --format='%(refname:short) %(committerdate:short) %(subject)'
+    
+    # GitHub specific
+    pr = "!f() { git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1; }; f"
+    issues = "!gh issue list"
+    issue = "!gh issue view"
+    
+    # Git flow aliases
+    feature = "!git flow feature"
+    hotfix = "!git flow hotfix"
+    release = "!git flow release"
+
+[color]
+    ui = auto
+    branch = auto
+    diff = auto
+    status = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+
+[init]
+    defaultBranch = main
+
+[credential]
+    helper = osxkeychain
+
+[url "https://github.com/"]
+    insteadOf = git@github.com:
+
+[url "https://"]
+    insteadOf = git://

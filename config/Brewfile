@@ -1,0 +1,60 @@
+# Essential Command Line Tools
+brew "git"
+brew "curl"
+brew "wget"
+brew "tree"
+brew "htop"
+brew "jq"
+
+# Modern CLI Tools
+brew "ripgrep"
+brew "fd"
+brew "bat"
+brew "exa"
+brew "fzf"
+
+# Development Languages
+brew "node"
+brew "python@3.11"
+brew "go"
+
+# Text Editors
+brew "neovim"
+
+# Terminal Tools
+brew "tmux"
+
+# Container Tools
+brew "docker"
+brew "docker-compose"
+
+# Database Tools
+brew "mysql"
+brew "postgresql@14"
+
+# Version Control
+brew "gh"  # GitHub CLI
+
+# Utilities
+brew "grep"
+brew "gnu-sed"
+brew "gnu-tar"
+brew "gnu-which"
+brew "coreutils"
+
+# Development Tools
+brew "git-lfs"
+brew "pre-commit"
+
+# Cask Applications (GUI Apps)
+cask "visual-studio-code"
+cask "iterm2"
+cask "docker"
+cask "google-chrome"
+cask "slack"
+cask "raycast"
+cask "rectangle"
+cask "alt-tab"
+cask "cleanmymac"
+cask "the-unarchiver"
+cask "spotify"
