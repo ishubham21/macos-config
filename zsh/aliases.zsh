@@ -520,3 +520,55 @@ if [[ "$OSTYPE" == darwin* ]]; then
     alias -s http='open'
     alias -s https='open'
 fi
+
+# =============================================================================
+# Additional Useful Aliases
+# =============================================================================
+
+# System utilities
+alias c='clear'
+alias h='history'
+alias j='jobs'
+alias f='fg'
+alias k='kill'
+alias e='${EDITOR:-code}'
+alias v='${EDITOR:-code}'
+alias o='open'
+alias p='pwd'
+
+# Development shortcuts
+alias n='note'
+alias todo='todo'
+alias weather='weather'
+alias ip='ipinfo'
+alias serve='serve'
+alias port='port'
+alias killport='killport'
+alias dus='dus'
+alias topcpu='topcpu'
+alias topmem='topmem'
+
+# File operations
+alias ff='ff'
+alias fd='fd'
+alias fo='fo'
+alias grepf='grepf'
+alias take='take'
+alias mkcd='mkcd'
+
+# Git workflow shortcuts
+alias gst='gst'
+alias gcb='gcb'
+alias gcm='gcm'
+alias gps='gps'
+alias gpl='gpl'
+alias gmerge='gmerge'
+alias gri='gri'
+alias gstash='gstash'
+alias gpop='gpop'
+alias glg='glg'
+alias gdiff='gdiff'
+alias gac='gac'
+
+# Project management
+alias newproject='newproject'

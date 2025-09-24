@@ -12,6 +12,244 @@ mkcd() {
     mkdir -p "$1" && cd "$1"
 }
 
+# Quick directory navigation (using functions instead of aliases)
+up() { cd ..; }
+up2() { cd ../..; }
+up3() { cd ../../..; }
+up4() { cd ../../../..; }
+
+# Create and enter directory
+take() {
+    mkdir -p "$1" && cd "$1"
+}
+
+# Find and open file
+fo() {
+    local file
+    file=$(fzf --query="$1" --select-1 --exit-0)
+    [[ -n "$file" ]] && ${EDITOR:-code} "$file"
+}
+
+# Find and open directory
+fd() {
+    local dir
+    dir=$(find ${1:-.} -path '*/\.*' -prune -o -type d -print 2> /dev/null | fzf +m)
+    [[ -n "$dir" ]] && cd "$dir"
+}
+
+# Quick file search
+ff() {
+    find . -type f -name "*$1*" 2>/dev/null | head -20
+}
+
+# Search in files
+grepf() {
+    grep -r "$1" . --include="*.${2:-*}" 2>/dev/null | head -20
+}
+
+# =============================================================================
+# Git Workflow Functions
+# =============================================================================
+
+# Quick git status with branch info
+gst() {
+    echo "=== Git Status ==="
+    git status --short --branch
+    echo ""
+    echo "=== Recent Commits ==="
+    git log --oneline -5
+}
+
+# Create and switch to new branch
+gcb() {
+    git checkout -b "$1"
+}
+
+# Quick commit with message
+gcm() {
+    git add . && git commit -m "$1"
+}
+
+# Push current branch
+gps() {
+    git push -u origin $(git branch --show-current)
+}
+
+# Pull latest changes
+gpl() {
+    git pull origin $(git branch --show-current)
+}
+
+# Merge and cleanup
+gmerge() {
+    local branch="$1"
+    git checkout main && git pull origin main && git merge "$branch" && git branch -d "$branch"
+}
+
+# Interactive rebase
+gri() {
+    git rebase -i HEAD~${1:-3}
+}
+
+# Quick stash
+gstash() {
+    git stash push -m "$1"
+}
+
+# Apply last stash
+gpop() {
+    git stash pop
+}
+
+# Show git log with graph
+glg() {
+    git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+}
+
+# Show file changes
+gdiff() {
+    git diff --name-only
+}
+
+# Quick add and commit
+gac() {
+    git add . && git commit -m "$1"
+}
+
+# =============================================================================
+# Development Workflow Functions
+# =============================================================================
+
+# Start a new project
+newproject() {
+    local project_name="$1"
+    local project_type="${2:-node}"
+    
+    mkdir "$project_name" && cd "$project_name"
+    
+    case "$project_type" in
+        node|js)
+            npm init -y
+            echo "node_modules/\n.env\n*.log" > .gitignore
+            ;;
+        python|py)
+            python3 -m venv venv
+            echo "venv/\n__pycache__/\n*.pyc\n.env" > .gitignore
+            ;;
+        go)
+            go mod init "$project_name"
+            echo "*.exe\n*.dll\n*.so\n*.dylib\n*.test\n*.out\nvendor/" > .gitignore
+            ;;
+        *)
+            echo "Unknown project type: $project_type"
+            ;;
+    esac
+    
+    git init
+    git add .
+    git commit -m "Initial commit"
+    echo "✅ Project '$project_name' created successfully!"
+}
+
+# Quick server start
+serve() {
+    local port="${1:-3000}"
+    if command -v python3 >/dev/null 2>&1; then
+        python3 -m http.server "$port"
+    elif command -v python >/dev/null 2>&1; then
+        python -m SimpleHTTPServer "$port"
+    else
+        echo "Python not found. Please install Python to use this function."
+    fi
+}
+
+# Quick port check
+port() {
+    lsof -i :"$1"
+}
+
+# Kill process on port
+killport() {
+    lsof -ti:"$1" | xargs kill -9
+}
+
+# =============================================================================
+# System Utilities
+# =============================================================================
+
+# Show disk usage
+dus() {
+    du -sh * | sort -hr | head -10
+}
+
+# Show top processes
+topcpu() {
+    ps aux | sort -nrk 3,3 | head -10
+}
+
+# Show top memory usage
+topmem() {
+    ps aux | sort -nrk 4,4 | head -10
+}
+
+# Quick weather
+weather() {
+    curl -s "wttr.in/${1:-}"
+}
+
+# Quick IP info
+ipinfo() {
+    curl -s "ipinfo.io/${1:-}"
+}
+
+# =============================================================================
+# Productivity Functions
+# =============================================================================
+
+# Create a todo list
+todo() {
+    local todo_file="${HOME}/.todo"
+    case "$1" in
+        add)
+            echo "- [ ] $2" >> "$todo_file"
+            echo "✅ Added: $2"
+            ;;
+        list|ls)
+            if [[ -f "$todo_file" ]]; then
+                cat "$todo_file"
+            else
+                echo "No todos found. Add one with: todo add 'your task'"
+            fi
+            ;;
+        done)
+            if [[ -f "$todo_file" ]]; then
+                sed -i '' "s/- \[ \] $2/- [x] $2/" "$todo_file"
+                echo "✅ Marked as done: $2"
+            fi
+            ;;
+        clear)
+            rm -f "$todo_file"
+            echo "✅ Cleared all todos"
+            ;;
+        *)
+            echo "Usage: todo {add|list|done|clear} [task]"
+            ;;
+    esac
+}
+
+# Quick note taking
+note() {
+    local note_file="${HOME}/notes/$(date +%Y-%m-%d).md"
+    mkdir -p "${HOME}/notes"
+    
+    if [[ -n "$1" ]]; then
+        echo "- $(date '+%H:%M'): $1" >> "$note_file"
+        echo "✅ Note added: $1"
+    else
+        ${EDITOR:-code} "$note_file"
+    fi
+}
+
 # Extract various archive formats
 extract_file() {
     if [[ -f "$1" ]]; then

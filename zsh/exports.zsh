@@ -174,3 +174,54 @@ export LESSHISTFILE="/dev/null"
 
 # MySQL history
 export MYSQL_HISTFILE="/dev/null"
+
+# =============================================================================
+# Additional Development Environment Variables
+# =============================================================================
+
+# Development tools
+export BROWSER="open"
+export TERM="xterm-256color"
+
+# Node.js
+export NODE_ENV="development"
+export NPM_CONFIG_PREFIX="$HOME/.npm-global"
+
+# Python
+export PYTHONPATH="$HOME/.local/lib/python3.11/site-packages:$PYTHONPATH"
+export PIP_USER=1
+
+# Go
+export GOPATH="$HOME/go"
+export GOBIN="$GOPATH/bin"
+
+# Rust
+export CARGO_HOME="$HOME/.cargo"
+export RUSTUP_HOME="$HOME/.rustup"
+
+# Docker
+export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1
+
+# FZF
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
+export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# History
+export HISTSIZE=10000
+export SAVEHIST=10000
+export HISTFILE="$HOME/.zsh_history"
+
+# Zsh options
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666"
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+
+# You Should Use
+export YSU_MESSAGE_POSITION="after"
+export YSU_HARDCORE=1
+
+# Performance
+export DISABLE_UNTRACKED_FILES_DIRTY="true"
+export COMPLETION_WAITING_DOTS="true"

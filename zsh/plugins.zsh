@@ -7,19 +7,31 @@
 # Oh My Zsh Plugin List
 # =============================================================================
 
-# Core plugins (minimal set for performance)
+# Core plugins (practical and useful)
 plugins=(
     git                    # Git integration and aliases
-    docker                 # Docker completions
+    git-flow              # Git flow commands
+    docker                # Docker completions
     kubectl               # Kubernetes completions
-    node                   # Node.js completions
-    npm                    # npm completions
-    colored-man-pages      # Colorized man pages
-    command-not-found      # Suggests packages for missing commands
-    sudo                   # ESC ESC to add sudo
-    copypath               # Copy current path
+    node                  # Node.js completions
+    npm                   # npm completions
+    colored-man-pages     # Colorized man pages
+    command-not-found     # Suggests packages for missing commands
+    sudo                  # ESC ESC to add sudo
+    copypath              # Copy current path
     copyfile              # Copy file contents
     jsontools             # JSON manipulation tools
+    web-search            # Web search from terminal
+    extract               # Extract archives
+    history               # Enhanced history
+    last-working-dir      # Remember last directory
+    z                     # Smart directory jumping
+    macos                 # macOS specific commands
+    brew                  # Homebrew integration
+    python                # Python completions
+    golang                # Go completions
+    aws                   # AWS CLI completions
+    terraform             # Terraform completions
 )
 
 # =============================================================================
