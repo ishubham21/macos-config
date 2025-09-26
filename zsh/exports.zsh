@@ -115,7 +115,6 @@ export BROWSER="open"
 export TERM="xterm-256color"
 
 export NODE_ENV="development"
-export NPM_CONFIG_PREFIX="$HOME/.npm-global"
 
 export PYTHONPATH="$HOME/.local/lib/python3.11/site-packages:$PYTHONPATH"
 export PIP_USER=1

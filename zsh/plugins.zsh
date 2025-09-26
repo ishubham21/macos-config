@@ -14,7 +14,6 @@ plugins=(
     copyfile
     jsontools
     web-search
-    extract
     history
     last-working-dir
     z
