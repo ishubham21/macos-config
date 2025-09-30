@@ -314,11 +314,6 @@ alias code.='code .'
 alias subl.='subl .'
 alias atom.='atom .'
 
-alias www='cd ~/Sites'
-alias dev='cd ~/Development'
-alias proj='cd ~/Projects'
-alias repos='cd ~/Repositories'
-
 alias dsclean='find . -name ".DS_Store" -type f -delete'
 alias nodemodclean='find . -name "node_modules" -type d -exec rm -rf {} +'
 alias xcclean='rm -rf ~/Library/Developer/Xcode/DerivedData/*'

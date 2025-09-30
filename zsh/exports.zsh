@@ -39,6 +39,7 @@ setopt HIST_VERIFY
 
 export NODE_OPTIONS="--max-old-space-size=8192"
 export NPM_CONFIG_PROGRESS=false
+export NODE_ENV="production"
 
 export PYTHONDONTWRITEBYTECODE=1
 export PIP_REQUIRE_VIRTUALENV=false
