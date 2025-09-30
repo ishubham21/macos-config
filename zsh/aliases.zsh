@@ -22,7 +22,6 @@ fi
 
 alias cp='cp -i'
 alias mv='mv -i'
-alias rm='rm -i'
 alias ln='ln -i'
 alias mkdir='mkdir -pv'
 alias md='mkdir -pv'
@@ -284,9 +283,6 @@ if [[ "$OSTYPE" == darwin* ]]; then
     alias paste='pbpaste'
     alias ql='qlmanage -p'
     
-    if command -v trash >/dev/null 2>&1; then
-        alias rm='trash'
-    fi
     
     alias osupdate='sudo softwareupdate -i -a'
     alias hidedesktop='defaults write com.apple.finder CreateDesktop -bool false && killall Finder'

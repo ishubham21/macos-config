@@ -3,26 +3,15 @@
 plugins=(
     git
     git-flow
-    docker
-    kubectl
-    node
-    npm
     colored-man-pages
     command-not-found
     sudo
-    copypath
     copyfile
     jsontools
     web-search
-    history
-    last-working-dir
     z
     macos
-    brew
     python
-    golang
-    aws
-    terraform
 )
 
 if command -v aws >/dev/null 2>&1; then
