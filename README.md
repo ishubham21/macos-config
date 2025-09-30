@@ -375,7 +375,6 @@ Set personal environment variables in `~/.zshrc.local`:
 # Development preferences
 export EDITOR="code --wait"
 export BROWSER="open"
-export NODE_ENV="development"
 
 # Personal paths
 export MY_PROJECTS_DIR="$HOME/Projects"
